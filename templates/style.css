@@ -1,164 +1,70 @@
-:root {
-    color-scheme: light;
-    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #f7f7f7;
-    color: #1d1d1d;
+/* Mobile-first, clean stylesheet with AfD-inspired blue/red accents */
+:root{
+  --bg:#f7f8fb;
+  --text:#0b1728;
+  --muted:#556175;
+  --brand-blue:#0b4ca6;
+  --brand-red:#e4002b;
+  --white:#ffffff;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+.container{width:min(1100px,calc(100% - 2rem));margin:0 auto}
+
+/* Skip link */
+.skip-link{position:absolute;left:-999px;top:-999px;background:#111;color:#fff;padding:0.6rem 0.9rem;border-radius:4px}
+.skip-link:focus-visible{left:1rem;top:1rem}
+
+/* Header */
+.site-header{background:var(--white);padding:0.9rem 0;border-bottom:1px solid rgba(6,27,60,0.06)}
+.site-header-inner{display:flex;flex-direction:column;gap:0.75rem}
+.site-left{display:flex;flex-direction:column;gap:0.6rem}
+.brand{display:inline-flex;align-items:center;gap:0.6rem;font-weight:800;color:var(--brand-blue);text-decoration:none}
+.brand-logo{height:36px}
+.brand-text{font-size:1.1rem;color:var(--brand-blue)}
+.site-right{display:flex;gap:0.5rem;align-items:center}
+
+/* Navigation */
+.menu{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.4rem}
+.menu li{margin:0;padding:0;}
+.menu a{color:var(--brand-blue);text-decoration:none;padding:0.35rem 0.4rem;border-radius:0.35rem;font-weight:600;display:inline-block}
+.menu a:hover,.menu a.active{color:var(--white);background:var(--brand-blue)}
+
+/* Hero / content */
+.content{background:var(--white);padding:1.25rem;margin:1rem 0;border-radius:8px;box-shadow:0 10px 30px rgba(15,23,42,0.06)}
+.hero-centered{padding:1.5rem;background:#f1f5f9;border-radius:8px}
+.hero-centered h1{font-size:1.75rem;margin:0 0 0.5rem 0;color:var(--text)}
+.hero-centered .lead{color:var(--muted);max-width:48rem}
+
+.cta-button{display:inline-block;background:var(--brand-blue);color:var(--white);padding:0.6rem 0.9rem;border-radius:8px;text-decoration:none;font-weight:700}
+.cta-button:hover{background:#063a86}
+
+.content h1{margin-top:0;font-size:1.6rem}
+.content h2{margin-top:1.25rem}
+.content p, .content ul, .content address{margin-bottom:1rem;color:var(--muted)}
+.content ul{padding-left:1.25rem}
+
+/* Share snippets container */
+.share-snippets{display:flex;flex-direction:column;gap:0.75rem}
+.snippet-box{background:#ffffff;border:1px solid rgba(6,27,60,0.05);padding:0.75rem;border-radius:8px}
+.snippet-box pre{margin:0;white-space:pre-wrap;word-break:break-word;overflow:auto;font-family:inherit;background:transparent}
+
+.snippet-box button{margin-top:0.5rem}
+
+.copy-toast{position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);background:rgba(11,76,166,0.96);color:#fff;padding:0.85rem 1rem;border-radius:999px;box-shadow:0 18px 40px rgba(0,0,0,0.2);font-size:0.95rem;z-index:1000;opacity:0;pointer-events:none;transition:opacity 180ms ease,transform 180ms ease}
+.copy-toast.visible{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.site-footer{background:#eef1f4;color:var(--text);padding:1rem 0}
+.footer-content{display:flex;flex-direction:column;gap:0.5rem}
+.site-footer a{color:var(--text);text-decoration:none}
+
+/* larger screens */
+@media(min-width:700px){
+  .site-header-inner{flex-direction:row;align-items:center;justify-content:space-between}
+  .site-left{flex-direction:row;align-items:center}
+  .menu{flex-direction:row;gap:1rem}
+  .footer-content{flex-direction:row;align-items:center;justify-content:space-between}
+  .hero-centered h1{font-size:2.25rem}
+  .content{padding:2rem}
 }
 
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-    line-height: 1.7;
-    background: #f3f4f6;
-}
-
-.skip-link {
-    position: absolute;
-    left: -999px;
-    top: -999px;
-    background: #111;
-    color: #fff;
-    padding: 0.75rem 1rem;
-    z-index: 1000;
-    transition: left 0.2s ease, top 0.2s ease;
-}
-
-.skip-link:focus-visible {
-    left: 1rem;
-    top: 1rem;
-}
-
-.page-wrapper {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-}
-
-.container {
-    width: min(1100px, calc(100% - 2rem));
-    margin: 0 auto;
-}
-
-.site-header {
-    background: #111111;
-    color: #ffffff;
-    padding: 1rem 0;
-}
-
-.site-header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.brand {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-}
-
-.menu a {
-    color: #c7c7c7;
-    text-decoration: none;
-    padding: 0.4rem 0.65rem;
-    border-radius: 0.35rem;
-}
-
-.menu a:hover,
-.menu a.active {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.content {
-    flex: 1;
-    background: #ffffff;
-    padding: 2rem;
-    margin: 1.5rem 0;
-    border-radius: 0.75rem;
-    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
-}
-
-.content h1 {
-    margin-top: 0;
-    letter-spacing: -0.03em;
-}
-
-.content h2 {
-    margin-top: 1.8rem;
-}
-
-.content p,
-.content ul,
-.content address {
-    margin-bottom: 1rem;
-    max-width: 60rem;
-}
-
-.content ul {
-    padding-left: 1.5rem;
-}
-
-.content address {
-    font-style: normal;
-    line-height: 1.8;
-}
-
-.site-footer {
-    background: #eef1f4;
-    color: #2f2f2f;
-    padding: 1.25rem 0;
-}
-
-.footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-}
-
-.site-footer a {
-    color: #2f2f2f;
-    text-decoration: none;
-}
-
-.site-footer a:hover,
-.site-footer a:focus-visible {
-    text-decoration: underline;
-}
-
-@media (max-width: 700px) {
-    .content {
-        padding: 1.5rem;
-    }
-
-    .site-header-inner {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}

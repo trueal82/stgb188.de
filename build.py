@@ -33,6 +33,10 @@ def parse_content_file(path: Path) -> dict:
                             order = int(value)
                         except ValueError:
                             pass
+    # Ensure Startseite (index.html) is ordered first regardless of filename sorting
+    if filename == "index.html":
+        order = -100
+
     return {
         "filename": filename,
         "title": title,
@@ -93,9 +97,31 @@ def copy_style():
     print(f"Written: {css_dir / 'style.css'}")
 
 
+def copy_assets():
+    assets_src = TEMPLATES_DIR / 'assets'
+    js_src = TEMPLATES_DIR / 'js'
+    assets_dst = OUTPUT_DIR / 'assets'
+    js_dst = OUTPUT_DIR / 'js'
+    # copy asset files (SVGs, images)
+    if assets_src.exists():
+        assets_dst.mkdir(parents=True, exist_ok=True)
+        for p in assets_src.iterdir():
+            if p.is_file():
+                (assets_dst / p.name).write_bytes(p.read_bytes())
+                print(f"Copied asset: {assets_dst / p.name}")
+    # copy JS files
+    if js_src.exists():
+        js_dst.mkdir(parents=True, exist_ok=True)
+        for p in js_src.iterdir():
+            if p.is_file() and not p.name.endswith('.bak') and not p.name.startswith('.'):
+                (js_dst / p.name).write_text(p.read_text(encoding='utf-8'), encoding='utf-8')
+                print(f"Copied script: {js_dst / p.name}")
+
+
 def build():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     copy_style()
+    copy_assets()
     pages = load_pages()
     for page in pages:
         build_page(page, pages)

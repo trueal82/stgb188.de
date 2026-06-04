@@ -3,21 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Informationsseite zu Paragraph 188 StGB inklusive Impressum und Datenschutzerklärung. Keine externen Ressourcen, kein Tracking.">
-    <title>{{title}} | Paragraph 188</title>
+    <meta name="description" content="Informationsseite zu StGB 188 inklusive Impressum und Datenschutzerklärung. Keine externen Ressourcen, kein Tracking.">
+    <title>{{title}} | StGB 188</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/logo.svg">
+    <meta property="og:title" content="StGB 188" />
+    <meta property="og:site_name" content="StGB 188" />
+    <meta property="og:image" content="https://www.stgb188.de/assets/og-image.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
     <div class="page-wrapper">
         <header class="site-header" role="banner">
             <div class="container site-header-inner">
-                <a class="brand" href="index.html">Paragraph 188</a>
-                <nav aria-label="Hauptnavigation">
-                    <ul class="menu">
-                        {{menu}}
-                    </ul>
-                </nav>
+                <div class="site-left">
+                    <a class="brand" href="index.html">
+                        <img src="assets/logo.svg" alt="StGB 188" class="brand-logo">
+                        <span class="brand-text">StGB 188</span>
+                    </a>
+                    <nav aria-label="Hauptnavigation">
+                        <ul class="menu">
+                            {{menu}}
+                        </ul>
+                    </nav>
+                </div>
+                <div class="site-right">
+                    <!-- theme switcher removed as requested -->
+                </div>
             </div>
         </header>
 
@@ -30,5 +43,6 @@
             {{footer}}
         </footer>
     </div>
+    <script src="js/script.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-# Paragraph 188 Static Website
+# StGB 188 Static Website
 
 This repository contains a small privacy-friendly static website with a shared layout and content pages. No external fonts, scripts, or trackers are used.
 
@@ -17,7 +17,7 @@ This repository contains a small privacy-friendly static website with a shared l
 - `static/index.html` — Startseite
 - `static/impressum.html` — Impressum
 - `static/datenschutzerklaerung.html` — Datenschutzerklärung
-- `static/paragraph188.html` — Was ist der Paragraph 188
+- `static/paragraph188.html` — Was ist StGB 188
 
 ## Build
 
