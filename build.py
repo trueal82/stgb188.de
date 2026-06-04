@@ -5,19 +5,13 @@ TEMPLATES_DIR = BASE_DIR / "templates"
 CONTENT_DIR = BASE_DIR / "content"
 OUTPUT_DIR = BASE_DIR / "static"
 
-NAV_ITEMS = [
-    {"href": "index.html", "label": "Startseite"},
-    {"href": "impressum.html", "label": "Impressum"},
-    {"href": "datenschutzerklaerung.html", "label": "Datenschutzerklärung"},
-    {"href": "paragraph188.html", "label": "Was ist der Paragraph 188"},
-]
-
-
 def parse_content_file(path: Path) -> dict:
     raw = path.read_text(encoding="utf-8")
     title = path.stem.capitalize()
     heading = title
+    filename = path.name
     content = raw
+    order = 0
 
     if raw.startswith("---"):
         parts = raw.split("---", 2)
@@ -33,12 +27,18 @@ def parse_content_file(path: Path) -> dict:
                     elif key == "heading":
                         heading = value
                     elif key == "filename":
-                        path = path.with_name(value)
+                        filename = value
+                    elif key == "order":
+                        try:
+                            order = int(value)
+                        except ValueError:
+                            pass
     return {
-        "filename": path.name,
+        "filename": filename,
         "title": title,
         "heading": heading,
         "content": content.strip(),
+        "order": order,
     }
 
 
@@ -46,8 +46,9 @@ def load_pages() -> list[dict]:
     if not CONTENT_DIR.exists():
         raise FileNotFoundError(f"Content directory not found: {CONTENT_DIR}")
     pages = []
-    for path in sorted(CONTENT_DIR.glob("*.html")):
+    for path in CONTENT_DIR.glob("*.html"):
         pages.append(parse_content_file(path))
+    pages.sort(key=lambda page: (page.get("order", 0), page["filename"]))
     return pages
 
 
@@ -56,25 +57,25 @@ def load_template(name: str) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def render_menu(active_href: str) -> str:
+def render_menu(pages: list[dict], active_href: str) -> str:
     template = load_template("menu.html")
     menu = []
-    for item in NAV_ITEMS:
-        active = "active" if item["href"] == active_href else ""
+    for item in pages:
+        active = "active" if item["filename"] == active_href else ""
         menu.append(
-            template.replace("{{href}}", item["href"]).replace("{{label}}", item["label"]).replace("{{active}}", active)
+            template.replace("{{href}}", item["filename"]).replace("{{label}}", item["title"]).replace("{{active}}", active)
         )
     return "\n".join(menu)
 
 
-def build_page(page: dict):
+def build_page(page: dict, pages: list[dict]):
     base = load_template("base.html")
     footer = load_template("footer.html")
     from datetime import datetime
     html = (
         base.replace("{{title}}", page["title"])
         .replace("{{heading}}", page["heading"])
-        .replace("{{menu}}", render_menu(page["filename"]))
+        .replace("{{menu}}", render_menu(pages, page["filename"]))
         .replace("{{content}}", page["content"])
         .replace("{{footer}}", footer)
         .replace("{{year}}", str(datetime.now().year))
@@ -95,8 +96,9 @@ def copy_style():
 def build():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     copy_style()
-    for page in load_pages():
-        build_page(page)
+    pages = load_pages()
+    for page in pages:
+        build_page(page, pages)
 
 
 if __name__ == "__main__":
