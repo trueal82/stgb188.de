@@ -1,0 +1,32 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# macOS
+.DS_Store
+
+# Editor directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+
+# Ignore generated archives and caches
+*.zip
+*.tar.gz
+*.egg-info/
+
+# Keep generated static output unless you want a different publish workflow
+static/
