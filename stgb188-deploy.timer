@@ -1,0 +1,11 @@
+[Unit]
+Description=Run stgb188.de deploy every 10 minutes
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=10min
+Unit=stgb188-deploy.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

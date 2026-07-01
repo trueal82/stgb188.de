@@ -1,0 +1,7 @@
+[Unit]
+Description=Deploy stgb188.de static site
+
+[Service]
+Type=oneshot
+WorkingDirectory=/Users/trueal/Documents/dev/stgb188.de
+ExecStart=/Users/trueal/Documents/dev/stgb188.de/deploy.sh
